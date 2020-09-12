@@ -22,6 +22,10 @@ function ControlsAndInput(){
 			this.menuDisplayed = !this.menuDisplayed;
 		}
 
+		if(keycode == 83){
+			sliderDisplayed = !sliderDisplayed;
+		}
+
 		if(keycode > 48 && keycode < 58){
 			var visNumber = keycode - 49;
 			vis.selectVisual(vis.visuals[visNumber].name); 
@@ -42,7 +46,11 @@ function ControlsAndInput(){
 		if(this.menuDisplayed){
 			text("Select a visualisation:", 100, 30);
 			this.menu();
-		}	
+		}
+		if(this.menuDisplayed){
+			text("Select a visualisation:", 100, 30);
+			this.menu();
+		}		
 		pop();
 
 	};

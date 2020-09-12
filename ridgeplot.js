@@ -4,47 +4,56 @@ function ridgePlot() {
     var startY = windowHeight * (1/5);
     var lineArray = [];
     var spectrumWidth = startX * 3;
-
     // Slider position
     var SliderPosXHidden = windowWidth * 1.2;
     var SliderPosYHidden = windowHeight * 1.2;
     var SliderPosXShown = windowWidth * 0.8;
     var SliderPosYShown = windowHeight * 0.2;
-
     // Speed Slider
     var speedSlider = createSlider(1,4,2.1);
-
     // Scale Slider
     var scaleSlider = createSlider(300,800,360);
-
     // Sample Rate Slider
     var ridgeSampleRateSlider = createSlider(1,5,3);
-    
     // Ridge Bandwidth Slider
     var ridgeBandWidthSlider = createSlider(0,1,0.5,0.05);
 
     this.draw = function(){
         noFill();
-        strokeWeight(1);
-        // Present Sliders
-        speedSlider.position(SliderPosXShown, SliderPosYShown + 10);
-        speed = speedSlider.value();
         stroke(255);
-        text("Speed - " + speed, SliderPosXShown, SliderPosYShown)
+        strokeWeight(1);
+        text("Press S for control sliders", SliderPosXShown, SliderPosYShown - 20);
 
-        scaleSlider.position(SliderPosXShown, SliderPosYShown + 60);
+        // Present Sliders
+        if (sliderDisplayed) {
+            stroke(255);
+            strokeWeight(1);
+            text("Speed - " + speed, SliderPosXShown, SliderPosYShown)
+            speedSlider.position(SliderPosXShown, SliderPosYShown + 10);
+
+            text("Scale - " + bigScale, SliderPosXShown, SliderPosYShown + 50)
+            scaleSlider.position(SliderPosXShown, SliderPosYShown + 60);
+
+            text("SampleSize - " + ridgeSampleRateSlider.value(), SliderPosXShown, SliderPosYShown + 100)
+            ridgeSampleRateSlider.position(SliderPosXShown, SliderPosYShown + 110);
+
+            text("Ridge Band Width - " + ridgeBandWidthSlider.value(), SliderPosXShown, SliderPosYShown + 150)
+            ridgeBandWidthSlider.position(SliderPosXShown, SliderPosYShown + 160);
+        } else {
+            speedSlider.position(SliderPosXHidden, SliderPosYHidden);
+            scaleSlider.position(SliderPosXHidden, SliderPosYHidden);
+            ridgeSampleRateSlider.position(SliderPosXHidden, SliderPosYHidden);
+            ridgeBandWidthSlider.position(SliderPosXHidden, SliderPosYHidden);
+        }
+
+        // Slider values to parameters
+        speed = speedSlider.value();
         bigScale = scaleSlider.value();
         smallScale = bigScale / 8;
-        text("Scale - " + bigScale, SliderPosXShown, SliderPosYShown + 50)
-
-        ridgeSampleRateSlider.position(SliderPosXShown, SliderPosYShown + 110);
         ridgeSampleRate = 2**(6-ridgeSampleRateSlider.value());
-        text("SampleSize - " + ridgeSampleRateSlider.value(), SliderPosXShown, SliderPosYShown + 100)
-
-        ridgeBandWidthSlider.position(SliderPosXShown, SliderPosYShown + 160);
         ridgeBandWidth = map(ridgeBandWidthSlider.value(),0,1,0.5,1);
-        text("Ridge Band Width - " + ridgeBandWidthSlider.value(), SliderPosXShown, SliderPosYShown + 150)
 
+        // Main Body - drawing output
         if(frameCount % ridgeSampleRate == 0){
             addWave();
         }

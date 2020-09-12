@@ -8,6 +8,8 @@ var sound = null;
 var fourier;
 // variable to contain sphere, which is rendered in 3D
 var sphereCanvas;
+// variable to control ridgeplot slider
+var sliderDisplayed = false;
 
 function preload(){
 	sound = loadSound('assets/stomper_reggae_bit.mp3');
