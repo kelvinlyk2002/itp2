@@ -3,32 +3,25 @@ function ridgePlot() {
     var startX = windowWidth/5;
     var startY = windowHeight * (1/5);
     var lineArray = [];
-
     var spectrumWidth = startX * 3;
 
+    // Slider position
     var SliderPosXHidden = windowWidth * 1.2;
     var SliderPosYHidden = windowHeight * 1.2;
-
     var SliderPosXShown = windowWidth * 0.8;
     var SliderPosYShown = windowHeight * 0.2;
 
     // Speed Slider
     var speedSlider = createSlider(1,4,2.1);
-    speedSlider.position(SliderPosXHidden, SliderPosYHidden);
-    speedSlider.style('width', '80px');
 
     // Scale Slider
     var scaleSlider = createSlider(300,800,360);
-    scaleSlider.position(SliderPosXHidden, SliderPosYHidden);
-    scaleSlider.style('width', '80px');
 
     // Sample Rate Slider
     var ridgeSampleRateSlider = createSlider(1,5,3);
-    ridgeSampleRateSlider.position(SliderPosXHidden, SliderPosYHidden);
-    ridgeSampleRateSlider.style('width', '80px');
-
-    var ridgeBandWidth = 0.75;
-
+    
+    // Ridge Bandwidth Slider
+    var ridgeBandWidthSlider = createSlider(0,1,0.5,0.05);
 
     this.draw = function(){
         noFill();
@@ -48,6 +41,9 @@ function ridgePlot() {
         ridgeSampleRate = 2**(6-ridgeSampleRateSlider.value());
         text("SampleSize - " + ridgeSampleRateSlider.value(), SliderPosXShown, SliderPosYShown + 100)
 
+        ridgeBandWidthSlider.position(SliderPosXShown, SliderPosYShown + 160);
+        ridgeBandWidth = map(ridgeBandWidthSlider.value(),0,1,0.5,1);
+        text("Ridge Band Width - " + ridgeBandWidthSlider.value(), SliderPosXShown, SliderPosYShown + 150)
 
         if(frameCount % ridgeSampleRate == 0){
             addWave();
