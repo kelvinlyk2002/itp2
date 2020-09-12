@@ -13,17 +13,17 @@ function ridgePlot() {
     var SliderPosYShown = windowHeight * 0.2;
 
     // Speed Slider
-    var speedSlider = createSlider(0.1,3,0.7);
+    var speedSlider = createSlider(1,4,2.1);
     speedSlider.position(SliderPosXHidden, SliderPosYHidden);
     speedSlider.style('width', '80px');
 
     // Scale Slider
-    var scaleSlider = createSlider(10,400,80);
+    var scaleSlider = createSlider(300,800,360);
     scaleSlider.position(SliderPosXHidden, SliderPosYHidden);
     scaleSlider.style('width', '80px');
 
     // Sample Rate Slider
-    var ridgeSampleRateSlider = createSlider(1,1024,64,2);
+    var ridgeSampleRateSlider = createSlider(1,5,3);
     ridgeSampleRateSlider.position(SliderPosXHidden, SliderPosYHidden);
     ridgeSampleRateSlider.style('width', '80px');
 
@@ -31,26 +31,33 @@ function ridgePlot() {
 
 
     this.draw = function(){
+        noFill();
+        strokeWeight(1);
         // Present Sliders
-        speedSlider.position(SliderPosXShown, SliderPosYShown);
+        speedSlider.position(SliderPosXShown, SliderPosYShown + 10);
         speed = speedSlider.value();
+        stroke(255);
+        text("Speed - " + speed, SliderPosXShown, SliderPosYShown)
 
-        scaleSlider.position(SliderPosXShown, SliderPosYShown + 20);
+        scaleSlider.position(SliderPosXShown, SliderPosYShown + 60);
         bigScale = scaleSlider.value();
         smallScale = bigScale / 8;
+        text("Scale - " + bigScale, SliderPosXShown, SliderPosYShown + 50)
 
-        ridgeSampleRateSlider.position(SliderPosXShown, SliderPosYShown + 40);
-        ridgeSampleRate = ridgeSampleRateSlider.value();
-        
-        stroke(255);
-        strokeWeight(2);
-        if(frameCount % 24 == 0){
+        ridgeSampleRateSlider.position(SliderPosXShown, SliderPosYShown + 110);
+        ridgeSampleRate = 2**(6-ridgeSampleRateSlider.value());
+        text("SampleSize - " + ridgeSampleRateSlider.value(), SliderPosXShown, SliderPosYShown + 100)
+
+
+        if(frameCount % ridgeSampleRate == 0){
             addWave();
         }
         for(i = 0; i < lineArray.length; i++){
             var outputLine = lineArray[i];
             beginShape();
             for(j = 0; j < outputLine.length; j++){
+                strokeWeight(2);
+                stroke(outputLine[j].rColor,outputLine[j].gColor,outputLine[j].bColor);
                 outputLine[j].y += speed;
                 vertex(outputLine[j].x, outputLine[j].y);
             }
@@ -65,7 +72,7 @@ function ridgePlot() {
         var w = fourier.waveform();
         var output_slots = [];
         for(i = 0; i < w.length; i++){
-            if(i % ridgeSampleRate == 0){
+            if(i % 16 == 0){
                 var pointX = map(i, 0 , 1024, startX, startX + spectrumWidth);
                 if (i < w.length * (1-ridgeBandWidth) || i > w.length * ridgeBandWidth){
                     var pointY = map(w[i], -1, 1, -smallScale, smallScale);
@@ -74,7 +81,10 @@ function ridgePlot() {
                 }
                     output_slots.push({
                         x: pointX,
-                        y: startY + pointY
+                        y: startY + pointY,
+                        rColor: random(0,255),
+                        gColor: random(0,255),
+                        bColor: random(0,255)
                         });
                 }
             }   
