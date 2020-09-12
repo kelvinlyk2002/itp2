@@ -10,8 +10,8 @@ function ControlsAndInput(){
 	//make the window fullscreen or revert to windowed
 	this.mousePressed = function(){
 		if(!this.playbackButton.hitCheck()){
-			var fs = fullscreen();
-			fullscreen(!fs);
+			// var fs = fullscreen();
+			// fullscreen(!fs);
 		}
 	};
 
