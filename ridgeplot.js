@@ -1,5 +1,5 @@
 function ridgePlot() {
-    this.name = "ridgeplot";
+    this.name = "Ridge Plot";
     var startX = windowWidth/5;
     var startY = windowHeight * (1/5);
     var lineArray = [];

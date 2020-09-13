@@ -29,7 +29,8 @@ function setup(){
 	 vis.add(new WavePattern());
 	 vis.add(new Needles());
 	 vis.add(new colourRipple());
-     vis.add(new ridgePlot());
+	 vis.add(new ridgePlot());
+	 vis.add(new ObjectSky());
 
 }
 
