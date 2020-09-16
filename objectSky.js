@@ -1,57 +1,39 @@
 function ObjectSky(){
     this.name = "Object sky";
-    var bassEnergyObjectCanvas = createGraphics(window.width/4 - 25,window.height - 100,WEBGL);
-    var lowMidObjectCanvas = createGraphics(window.width/4 - 25,window.height - 100,WEBGL);
-    var highMidObjectCanvas = createGraphics(window.width/4 - 25,window.height - 100,WEBGL);
-    var trebleObjectCanvas = createGraphics(window.width/4 - 25,window.height - 100,WEBGL);
+
+    var canvasArray = [];
+    var margin = 50;
+
+    // build a 4x4 canvas
+    for (var i = 0; i < 16; i++){
+        var canvas = {
+            graphics: createGraphics(window.width/4 - 25,window.height/4 - 25,WEBGL),
+            xpos: margin + (i % 4) * (window.width/4 - margin/2),
+            ypos: margin + Math.floor(i / 4) * (window.height/4 - margin/2)
+        };
+        canvasArray.push(canvas);
+    }
 
 	this.draw = function(){
-        bassEnergyObjectCanvas.background(0);
-        lowMidObjectCanvas.background(0);
-        highMidObjectCanvas.background(0);
-        trebleObjectCanvas.background(0);
-
-        var spectrum = fourier.analyze();
-        var bassEnergy = fourier.getEnergy("bass");
-        var lowMidEnergy = fourier.getEnergy("lowMid");
-        var highMidEnergy = fourier.getEnergy("highMid");
-        var trebleEnergy = fourier.getEnergy("treble");
-        
-        bassEnergyObjectCanvas.push();
-        bassEnergyObjectCanvas.rotateZ(frameCount * 0.01);
-        bassEnergyObjectCanvas.rotateX(frameCount * 0.01);
-        bassEnergyObjectCanvas.rotateY(frameCount * 0.01);
-        var bassEnergyRadius = map(bassEnergy, 0, 255, 0, width);
-        bassEnergyObjectCanvas.sphere(bassEnergyRadius);
-        bassEnergyObjectCanvas.pop();
-
-        lowMidObjectCanvas.push();
-        lowMidObjectCanvas.rotateZ(frameCount * 0.01);
-        lowMidObjectCanvas.rotateX(frameCount * 0.01);
-        lowMidObjectCanvas.rotateY(frameCount * 0.01);
-        var lowMidEnergyRadius = map(lowMidEnergy, 0, 255, 0, width);
-        lowMidObjectCanvas.sphere(lowMidEnergyRadius);
-        lowMidObjectCanvas.pop();
-
-        highMidObjectCanvas.push();
-        highMidObjectCanvas.rotateZ(frameCount * 0.01);
-        highMidObjectCanvas.rotateX(frameCount * 0.01);
-        highMidObjectCanvas.rotateY(frameCount * 0.01);
-        var highMidEnergyRadius = map(highMidEnergy, 0, 255, 0, width);
-        highMidObjectCanvas.sphere(highMidEnergyRadius);
-        highMidObjectCanvas.pop();
-
-        trebleObjectCanvas.push();
-        trebleObjectCanvas.rotateZ(frameCount * 0.01);
-        trebleObjectCanvas.rotateX(frameCount * 0.01);
-        trebleObjectCanvas.rotateY(frameCount * 0.01);
-        var trebleEnergyRadius = map(trebleEnergy, 0, 255, 0, width);
-        trebleObjectCanvas.sphere(trebleEnergyRadius);
-        trebleObjectCanvas.pop();
-
-        image(bassEnergyObjectCanvas, 50, 50);
-        image(lowMidObjectCanvas, window.width/4 + 25, 50);
-        image(highMidObjectCanvas, window.width/2, 50);
-        image(trebleObjectCanvas, window.width*3/4 - 25, 50);
+        background(0);
+        var spectrum = fourier.analyze(16);
+        for (var i = 0; i < 16; i++){
+            renderObject(canvasArray[i].graphics, spectrum[i], canvasArray[i].xpos, canvasArray[i].ypos);
+        }
 	};
+}
+
+function renderObject(canvas, energy, canvas_xpos, canvas_y_pos){
+    // transparent background for all Graphics canvas
+    canvas.background('rgba(0,0,0,0)');
+    canvas.push();
+    // rotating object
+    canvas.rotateY((frameCount) * 0.1);
+    // rendering the object
+    canvas.normalMaterial();
+    var objectRadius = map(energy, 0, 255, canvas.height/6, canvas.height/3);
+    canvas.torus(objectRadius, 10);
+    canvas.pop();
+    // moving the canvas into position on screen
+    image(canvas, canvas_xpos, canvas_y_pos);
 }
