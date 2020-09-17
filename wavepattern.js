@@ -12,7 +12,7 @@ function WavePattern() {
 
 		beginShape();
 		//calculate the waveform from the fft.
-		var wave = fourier.waveform();
+		var wave = fourier.waveform(1024);
 		for (var i = 0; i < wave.length; i++) {
 			//for each element of the waveform map it to screen
 			//coordinates and make a new vertex at the point.

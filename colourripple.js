@@ -7,7 +7,7 @@ function colourRipple() {
 	//draw the mirrorballs to the screen
 	this.draw = function() {
         // sample sound
-        var spectrum = fourier.analyze();
+        var spectrum = fourier.analyze(1024);
         currentSample = new ellipseData(
             fourier.getEnergy("highMid"),
             fourier.getEnergy("mid"),

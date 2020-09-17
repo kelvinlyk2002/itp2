@@ -15,24 +15,29 @@ function ObjectSky(){
     }
 
 	this.draw = function(){
-        background(0);
-        var spectrum = fourier.analyze(16);
+        var spectrum = fourier.waveform(16);
         for (var i = 0; i < 16; i++){
-            renderObject(canvasArray[i].graphics, spectrum[i], canvasArray[i].xpos, canvasArray[i].ypos);
+            renderObject(
+                canvasArray[i].graphics,
+                spectrum[i],
+                canvasArray[i].xpos,
+                canvasArray[i].ypos
+            );
         }
 	};
 }
 
 function renderObject(canvas, energy, canvas_xpos, canvas_y_pos){
     // transparent background for all Graphics canvas
-    canvas.background('rgba(0,0,0,0)');
-    canvas.push();
-    // rotating object
-    canvas.rotateY((frameCount) * 0.1);
-    // rendering the object
-    canvas.normalMaterial();
-    var objectRadius = map(energy, 0, 255, canvas.height/6, canvas.height/3);
-    canvas.torus(objectRadius, 10);
+        canvas.background('rgba(128,128,128,1)');
+        canvas.push();
+        // rotating object
+        canvas.rotateY(frameCount * 0.1);
+        // rendering the object
+        canvas.translate(energy*10, energy*10);
+        canvas.normalMaterial();
+        var objectRadius = map(energy,-1,1, canvas.height/6, canvas.height/3);
+        canvas.torus(objectRadius,5);
     canvas.pop();
     // moving the canvas into position on screen
     image(canvas, canvas_xpos, canvas_y_pos);

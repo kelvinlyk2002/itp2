@@ -9,7 +9,7 @@ function Spectrum(){
 		text("Slide up for bigger circle \n Slide right for thicker bars", 0, 0);
 		var radius = map(mouseY, 0, window.height, 50, 250);
 		var width = map(mouseX, 0, window.width, 1, 20);
-		var spectrum = fourier.analyze();
+		var spectrum = fourier.analyze(1024);
 		noStroke();
 
 		for(var i = 0; i< spectrum.length; i++){

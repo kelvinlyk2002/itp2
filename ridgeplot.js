@@ -74,7 +74,7 @@ function ridgePlot() {
     }
     
     function addWave(){ 
-        var w = fourier.waveform();
+        var w = fourier.waveform(1024);
         var output_slots = [];
         for(i = 0; i < w.length; i++){
             if(i % 16 == 0){

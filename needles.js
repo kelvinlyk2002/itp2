@@ -27,7 +27,7 @@ function Needles() {
 	// draw the plots to the screen
 	this.draw = function() {
 		//create an array amplitude values from the fft.
-		var spectrum = fourier.analyze();
+		var spectrum = fourier.analyze(1024);
 		//iterator for selecting frequency bin.
 		var currentBin = 0;
 		push();
