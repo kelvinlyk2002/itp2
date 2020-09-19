@@ -2,7 +2,7 @@
 //controls
 function ControlsAndInput(){
 	
-	this.menuDisplayed = false;
+	this.menuDisplayed = true;
 	
 	//playback button displayed in the top left of the screen
 	this.playbackButton = new PlaybackButton();
@@ -25,10 +25,16 @@ function ControlsAndInput(){
 		if(keycode == 83){
 			sliderDisplayed = !sliderDisplayed;
 		}
-
+        
 		if(keycode > 48 && keycode < 58){
 			var visNumber = keycode - 49;
-			vis.selectVisual(vis.visuals[visNumber].name); 
+            // hide slider if it is in open state before changing to another visualisations
+            if(sliderDisplayed){
+                vis.selectedVisual.hideSliders();
+                sliderDisplayed =!sliderDisplayed;
+            }
+			vis.selectVisual(vis.visuals[visNumber].name);
+
 		}
 	};
 
@@ -44,11 +50,8 @@ function ControlsAndInput(){
 		this.playbackButton.draw();
 		//only draw the menu if menu displayed is set to true.
 		if(this.menuDisplayed){
-			text("Select a visualisation:", 100, 30);
-			this.menu();
-		}
-		if(this.menuDisplayed){
-			text("Select a visualisation:", 100, 30);
+            text("Press space to hide menu", 100, 30);
+			text("Select a visualisation:", 100, 70);
 			this.menu();
 		}		
 		pop();
@@ -58,7 +61,7 @@ function ControlsAndInput(){
 	this.menu = function(){
 		//draw out menu items for each visualisation
 		for(var i = 0; i < vis.visuals.length; i++){
-			var yLoc = 70 + i*40;
+			var yLoc = 110 + i*40;
 			text((i+1) + ":  " +vis.visuals[i].name, 100, yLoc);
 		}
 	};

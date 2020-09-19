@@ -40,10 +40,7 @@ function ridgePlot() {
             text("Ridge Band Width - " + ridgeBandWidthSlider.value(), SliderPosXShown, SliderPosYShown + 150)
             ridgeBandWidthSlider.position(SliderPosXShown, SliderPosYShown + 160);
         } else {
-            speedSlider.position(SliderPosXHidden, SliderPosYHidden);
-            scaleSlider.position(SliderPosXHidden, SliderPosYHidden);
-            ridgeSampleRateSlider.position(SliderPosXHidden, SliderPosYHidden);
-            ridgeBandWidthSlider.position(SliderPosXHidden, SliderPosYHidden);
+            this.hideSliders();
         }
 
         // Slider values to parameters
@@ -96,4 +93,11 @@ function ridgePlot() {
 
         lineArray.push(output_slots);
         }
+    
+    this.hideSliders = function(){
+           speedSlider.position(SliderPosXHidden, SliderPosYHidden);
+            scaleSlider.position(SliderPosXHidden, SliderPosYHidden);
+            ridgeSampleRateSlider.position(SliderPosXHidden, SliderPosYHidden);
+            ridgeBandWidthSlider.position(SliderPosXHidden, SliderPosYHidden);
+    }
 }
