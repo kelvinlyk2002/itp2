@@ -1,4 +1,4 @@
-function ridgePlot() {
+function RidgePlot() {
     this.name = "Ridge Plot";
     var startX = windowWidth/5;
     var startY = windowHeight * (1/5);

@@ -13,6 +13,7 @@ function Object3D(){
             xpos: margin + (i % 4) * (window.width/4 - margin/2),
             ypos: margin + Math.floor(i / 4) * (window.height/4 - margin/2)
         };
+        // put the generated canvas into an array to be displayed
         canvasArray.push(canvas);
     }
 

@@ -1,5 +1,5 @@
 //draw the waveform to the screen
-function colourRipple() {
+function ColourRipple() {
 	//vis name
 	this.name = "Colour ripple";
     var ellipseDataArray = [];

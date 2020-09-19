@@ -6,8 +6,7 @@ var vis = null;
 var sound = null;
 //variable for p5 fast fourier transform
 var fourier;
-// variable to contain sphere, which is rendered in 3D
-var sphereCanvas;
+
 // variable to control ridgeplot slider
 var sliderDisplayed = false;
 
@@ -28,9 +27,9 @@ function setup(){
 	 vis.add(new Spectrum());
 	 vis.add(new WavePattern());
 	 vis.add(new Needles());
-	 vis.add(new colourRipple());
-	 vis.add(new ridgePlot());
-	 vis.add(new ObjectSky());
+	 vis.add(new ColourRipple());
+	 vis.add(new RidgePlot());
+	 vis.add(new Object3D());
 
 }
 
